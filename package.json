@@ -1,5 +1,6 @@
 {
   "name": "hello-world",
+  "homepage": "https://galinovskayaa.github.io/hello-vue/",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,7 +19,8 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "gh-pages": "^3.2.3"
   },
   "eslintConfig": {
     "root": true,
