@@ -1,0 +1,73 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding: 4rem 12rem 2rem;
+  height: 100vh;
+}
+
+.calculator {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 80%;
+  flex-wrap: wrap;
+}
+
+.calculator button {
+  width: 1.9rem;
+  height: 1.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border: 1px solid #fff;
+  border-radius: 0.4rem;
+  outline: none;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, .75);
+}
+
+.calculator .two-button {
+  width: 3.8rem;
+}
+
+.calculator button:hover {
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.output {
+  background-color: rgba(1, 10, 35, 0.9);
+  height: 12rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  word-wrap: break-word;
+  word-break: break-all;
+  border-radius: 0.5rem;
+  text-align: end;
+}
+
+.output .previous-operand {
+  width: 100%;
+  height: 1.5rem;
+  color: rgba(255, 255, 255, .75);
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.output .current-operand {
+  width: 100%;
+  height: 3rem;
+  color: #fff;
+  font-size: 1.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+

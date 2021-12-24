@@ -3,8 +3,12 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    output: {
+        filename: 'my-first-webpack.bundle.js',
+    },
     module: {
         rules: [
+            { test: /\.txt$/, use: 'raw-loader' },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
@@ -34,12 +38,24 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     'vue-style-loader',
+                    'sass-loader',
                     {
                         loader: 'css-loader',
                         options: { modules: true }
                     },
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    "style-loader",
+                    // Translates CSS into CommonJS
+                    "css-loader",
+                    // Compiles Sass to CSS
+                    "sass-loader",
+                ],
             },
             {
                 enforce: 'pre',

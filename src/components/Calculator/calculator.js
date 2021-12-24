@@ -1,12 +1,11 @@
 export default {
     name: 'Calculator',
-    props: {
-        msg: String
+    components: {
     },
+    inject: ['calculator'],
     mounted() {
         //  document.querySelector('#calc').addEventListener('click', button => { this.updateDisplay() })
         document.addEventListener('keydown', event => {
-            console.log(event.key)
             if ((event.key).match(/[0-9.]/)) {
                 console.log(event)
                 this.appendNumber(event.key)
@@ -32,13 +31,24 @@ export default {
             del: 'DEL',
             equals: '=',
             buttons: {
-                numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '.'],
+                numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'],
                 operations: ['÷', '*', '+', '-', '^']
             },
-            isClear: false
+            isClear: false,
+
+            width: 0,
+            height: 0,
+            top: 0,
+            left: 0
         }
     },
     methods: {
+        resize(newRect) {
+            this.width = newRect.width;
+            this.height = newRect.height;
+            this.top = newRect.top;
+            this.left = newRect.left;
+        },
         clear: function () {
             this.previousOperand = ''
             this.currentOperand = ''
