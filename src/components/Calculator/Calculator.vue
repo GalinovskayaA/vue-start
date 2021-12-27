@@ -25,7 +25,7 @@
 </template>
 
 
-<script src="calculator.js"> </script>
+<script src="./calculator.js"> </script>
 
 <style lang="scss" scoped>
 @import "./calculator.scss";

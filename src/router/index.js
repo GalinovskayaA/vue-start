@@ -7,10 +7,10 @@ import Counter from "../components/Counter/Counter";
 
 const routes = [
     {path: '/', component: Home},
-    {path: '/calculator', name: 'Calculator', component: Calculator},
-    {path: '/converter', name: 'Converter', component: Converter},
-    {path: '/about', name: 'About', component: About},
-    {path: '/counter', name: 'Counter', component: Counter},
+    {path: '/calculator', name: 'My-Calculator', component: Calculator},
+    {path: '/converter', name: 'My-Converter', component: Converter},
+    {path: '/about', name: 'My-About', component: About},
+    {path: '/counter', name: 'My-Counter', component: Counter},
 ];
 
 const router = createRouter({

@@ -4,8 +4,14 @@ export default {
     },
     inject: ['calculator'],
     mounted() {
-        //  document.querySelector('#calc').addEventListener('click', button => { this.updateDisplay() })
-        document.addEventListener('keydown', event => {
+        Draggable.create('.output', {
+            type: 'x,y',
+            bounds: '#Calculator',
+            edgeResistance: 0.65,
+            inertia: true,
+        })
+        document.addEventListener('keydown',
+event => {
             if ((event.key).match(/[0-9.]/)) {
                 console.log(event)
                 this.appendNumber(event.key)
@@ -35,11 +41,6 @@ export default {
                 operations: ['÷', '*', '+', '-', '^']
             },
             isClear: false,
-
-            width: 0,
-            height: 0,
-            top: 0,
-            left: 0
         }
     },
     methods: {
@@ -84,7 +85,7 @@ export default {
                 this.previousOperand = '0'
                 this.operation = operation
             }
-            if (this.operation != null) this.operation = operation
+        //    if (this.operation != null) this.operation = operation
             if (this.currentOperand === '') return
             if (this.previousOperand !== '') {
                 this.compute()
@@ -120,7 +121,7 @@ export default {
                 default:
                     return
             }
-            this.currentOperand = parseFloat(computation.toFixed(14))
+            this.currentOperand = parseFloat(computation.toFixed(12))
             this.operation = undefined
             this.previousOperand = ''
             this.updateDisplay()
