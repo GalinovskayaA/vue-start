@@ -85,7 +85,7 @@ event => {
                 this.previousOperand = '0'
                 this.operation = operation
             }
-        //    if (this.operation != null) this.operation = operation
+            if (this.operation != null && this.currentOperand === '') this.operation = operation
             if (this.currentOperand === '') return
             if (this.previousOperand !== '') {
                 this.compute()
