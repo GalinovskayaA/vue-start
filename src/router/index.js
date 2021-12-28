@@ -7,7 +7,6 @@ import Counter from "../components/Counter/Counter";
 
 const routes = [
     {path: '/', component: Home},
-    {path: '*', component: Home},
     {path: '/calculator', name: 'My-Calculator', component: Calculator},
     {path: '/converter', name: 'My-Converter', component: Converter},
     {path: '/about', name: 'My-About', component: About},
