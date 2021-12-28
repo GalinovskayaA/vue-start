@@ -6,6 +6,7 @@ import About from "../views/About";
 import Counter from "../components/Counter/Counter";
 
 const routes = [
+    {path: '/vue-start', component: Home},
     {path: '/', component: Home},
     {path: '/calculator', name: 'My-Calculator', component: Calculator},
     {path: '/converter', name: 'My-Converter', component: Converter},
