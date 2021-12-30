@@ -38,7 +38,7 @@ event => {
             equals: '=',
             buttons: {
                 numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'],
-                operations: ['÷', '*', '+', '-', '^']
+                operations: ['/', '*', '+', '-', '^']
             },
             isClear: false,
         }
@@ -112,7 +112,7 @@ event => {
                 case '*':
                     computation = prev * current
                     break
-                case '÷':
+                case '/':
                     computation = prev / current
                     break
                 case '^':

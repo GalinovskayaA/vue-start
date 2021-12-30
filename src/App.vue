@@ -1,19 +1,31 @@
 <template>
-  <div :class="{black: toggle, white: !toggle}">
-    <div id="nav" class="nav">
-      <div class="nav-routes">
-        <router-link to="/"> Home </router-link> |
-        <router-link to="/calculator"> Calculator </router-link> |
-        <router-link to="/converter"> Converter </router-link> |
-        <router-link to="/about"> About page </router-link> |
-        <router-link to="/counter"> Counter </router-link>
+  <div :class="{black: toggle, white: !toggle}" class="snowContainer">
+    <div id="snow">
+      <div id="nav" class="nav">
+        <div class="nav-routes">
+          <router-link to="/"> Home </router-link> |
+          <router-link to="/calculator"> Calculator </router-link> |
+          <router-link to="/converter"> Converter </router-link> |
+          <router-link to="/posts"> Posts page </router-link> |
+          <router-link to="/counter"> Counter </router-link>
+        </div>
+        <transition name="fade" mode="out-in">
+          <button v-if="toggle"
+                  v-on:click="toggle = !toggle"
+                  class="button-control"
+                  :class="{buttonControlWhite: toggle}"
+                  key="white"
+          > white
+          </button>
+          <button v-else v-on:click="toggle = !toggle"
+                  class="button-control"
+                  key="black"
+          > black
+          </button>
+        </transition>
       </div>
-      <transition name="fade" mode="out-in">
-        <button v-if="toggle" v-on:click="toggle = !toggle" class="button-control" :class="{buttonControlWhite: toggle}" key="white"> white </button>
-        <button v-else v-on:click="toggle = !toggle" class="button-control" key="black"> black </button>
-      </transition>
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 
@@ -39,6 +51,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import './assets/styles.scss';
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -58,6 +72,7 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 .nav {
@@ -117,5 +132,31 @@ body {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.snowContainer { width: 100%; height: max-content; position: absolute; top: 0; left: 0; z-index: 0;}
+#snow {
+  width: 100%;
+  height: 100%;
+  background-image:
+      url("https://yraaa.ru/_pu/27/15825154.png"),
+      url("https://yraaa.ru/_pu/27/89961317.png"),
+      url("https://yraaa.ru/_pu/27/21791255.png");
+  -webkit-animation: snow 20s linear infinite;
+  -moz-animation: snow 20s linear infinite;
+  -ms-animation: snow 20s linear infinite;
+  animation: snow 20s linear infinite;
+}
+@keyframes snow {
+  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+@-moz-keyframes snow {
+  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+@-webkit-keyframes snow {
+  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+@-ms-keyframes snow {
+  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
 }
 </style>

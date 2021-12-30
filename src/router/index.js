@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Calculator from './../components/Calculator/Calculator.vue'
 import Converter from './../components/Converter/Converter'
 import Home from "../views/Home";
-import About from "../views/About";
+import Posts from "../components/Posts/Posts";
 import Counter from "../components/Counter/Counter";
 
 const routes = [
@@ -10,7 +10,7 @@ const routes = [
     {path: '/', component: Home},
     {path: '/calculator', name: 'My-Calculator', component: Calculator},
     {path: '/converter', name: 'My-Converter', component: Converter},
-    {path: '/about', name: 'My-About', component: About},
+    {path: '/posts', name: 'My-Posts', component: Posts},
     {path: '/counter', name: 'My-Counter', component: Counter},
 ];
 
