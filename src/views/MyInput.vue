@@ -1,16 +1,17 @@
 <template>
-  <input :value="modalValue" @input="updateInput" class="input" type="text">
+  <input :value="modelValue" @input="updateInput" class="input" type="text" :placeholder="placeholder">
 </template>
 
 <script>
 export default {
   name: "my-input",
   props: {
-    modalValue: [String, Number]
+    modelValue: [String, Number],
+    placeholder: String
   },
   methods: {
     updateInput(e) {
-      this.$emit('update:modalValue', e.target.value)
+      this.$emit('update:modelValue', e.target.value)
     }
   }
 }
@@ -18,8 +19,9 @@ export default {
 
 <style scoped>
 .input {
+  padding: 0.3rem 0.5rem;
+  width: 16.5rem;
   outline: none;
-  border: 0.5rem solid #fff4be;
-  padding: 0.5rem 1rem;
+  border: 0.1rem solid #fdfbf4;
 }
 </style>

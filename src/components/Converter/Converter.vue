@@ -5,18 +5,34 @@
         <Krutilka/>
       </div>
       <h1> Complete list of foreign currencies: </h1>
+      <MyInput v-model="searchQuery" placeholder="Поиск"/>
       <div class="select">
         <MySelect v-model="selectedSort"
                   title="Complete list of foreign currencies: "
                   :options="sortOptions"/>
       </div>
-      <div v-if="listAllRates.isListError" class="error"> ¯\_(ツ)_/¯ {{ listAllRates.errorMessageList }} </div>
-      <div v-else v-for="rate in listAllRates.allRates">
-        <div :key="rate.Cur_Code" class="list">
-          <span> {{ rate.Cur_Name }} : </span>
-          <span> {{ rate.Cur_QuotName }} </span>
+      <div class="pageWrapper">
+        <div v-for="pageNumber in totalPages"
+             @click="onChangePage(pageNumber)"
+             :key="pageNumber" class="page"
+             :class="{'current-page': page === pageNumber}"
+        >
+          {{ pageNumber }}
         </div>
+        <ModalAlert v-bind:isShow="isShowModal"
+                    v-bind:closeModal="closeModal"
+                    title="Не реализовано"
+        />
       </div>
+      <transition-group name="list" tag="div" >
+      <div v-if="listAllRates.isListError" class="error"> ¯\_(ツ)_/¯ {{ listAllRates.errorMessageList }} </div>
+        <div v-else v-for="rate in sortedAndSearchRate" :key="rate.Cur_Code">
+          <div class="list">
+            <span> {{ rate.Cur_Name }} : </span>
+            <span> {{ rate.Cur_QuotName }} </span>
+          </div>
+        </div>
+      </transition-group>
       <div class="allList">
         <h1> Daily exchange rate of the Belarusian ruble against foreign currencies: </h1>
         <div v-if="listRateOfBel.isListError" class="error"> ¯\_(ツ)_/¯ {{ listRateOfBel.errorMessageList }} </div>
@@ -28,19 +44,21 @@
         </div>
       </div>
     </div>
-    <div v-if="initRateList.length > 1" class="converter">
-      <div v-for="rate in initRateList">
-        <MyInputRate v-model="rate.value"
-                     :rate="rate.name"
-                     :abbreviation="rate.abbreviation"
-                     :key="rate.id"
-                     :onChangeValue="onChangeValue"
-                     :onRemoveRate="onRemoveRate"/>
+      <div v-if="initRateList.length > 1" class="converter">
+        <transition-group name="rate-list">
+          <div v-for="rate in initRateList" :key="rate.id" class="rate-list-item">
+            <MyInputRate v-model="rate.value"
+                         :rate="rate.name"
+                         :abbreviation="rate.abbreviation"
+                         :key="rate.id"
+                         :onChangeValue="onChangeValue"
+                         :onRemoveRate="onRemoveRate"/>
+          </div>
+        </transition-group>
+        <MySelectRate v-model="selectedRate"
+                      title="Добавить валюту "
+                      :options="listRateOfBel.allRates"/>
       </div>
-      <MySelectRate v-model="selectedRate"
-                    title="Добавить валюту "
-                    :options="listRateOfBel.allRates"/>
-    </div>
   </div>
 </template>
 
@@ -50,20 +68,29 @@ import Krutilka from "../../views/Krutilka";
 import MyInputRate from "../../views/MyInputRate";
 import MySelect from "../../views/MySelect";
 import MySelectRate from "../../views/MySelectRate";
+import MyInput from "../../views/MyInput";
+import ModalAlert from "../../views/ModalAlert";
 
 export default {
   name: "Converter",
   components: {
+    MyInput,
     MySelect,
     MySelectRate,
     MyInputRate,
-    Krutilka
+    Krutilka,
+    ModalAlert
   },
   data() {
     return {
+      isShowModal: false,
       currentRate: {},
       selectedSort: '',
       selectedRate: '',
+      searchQuery: '',
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       sortOptions: [
         {value: 'Cur_Name', name: 'по названию'},
         {value: 'Cur_QuotName', name: 'по содержанию'}
@@ -98,17 +125,33 @@ export default {
     this.fetchRateOfBel()
   },
   watch: {
-    selectedSort(newValue) {
+    /*selectedSort(newValue) {
       this.listAllRates.allRates.sort((prev, curr) => {
         return prev[newValue]?.localeCompare(curr[newValue])
       })
-    },
+    },*/
     selectedRate(newValue) {
       this.initRateListAbbr.push(newValue)
       this.createNewRate(this.listRateOfBel.allRates, newValue)
+    },
+    page() {
+      this.fetchListCurs()
+    }
+  },
+  computed: {
+    sortedRates() { // передается как переменная !
+      return [...this.listAllRates.allRates].sort((prev, curr) => {
+        return prev[this.selectedSort]?.localeCompare(curr[this.selectedSort])
+      })
+    },
+    sortedAndSearchRate() {
+      return this.sortedRates.filter(rate => rate.Cur_Name.toLowerCase().includes(this.searchQuery.toLowerCase()))
     }
   },
   methods: {
+    closeModal(value) {
+      this.isShowModal = value
+    },
     onChangeValue(abbreviation, curValue) {
       this.currentRate = this.initRateList.find(rate => rate.abbreviation === abbreviation)
       this.initRateList.map(rate => {
@@ -119,6 +162,10 @@ export default {
         }
       })
       this.currentRate = {}
+    },
+    onChangePage(pageNumber) {
+      this.page = pageNumber
+      this.isShowModal = true
     },
     ratesFilter(array) {
       this.listAllRates.allRates = array.filter(rate => parseInt(rate.Cur_DateEnd.substring(4, -4)) > 2021)
@@ -149,6 +196,7 @@ export default {
       try {
         const response = await axios.get(`https://www.nbrb.by/api/exrates/currencies`)
         this.ratesFilter(response.data)
+        this.totalPages = Math.ceil(this.listAllRates.allRates.length / this.limit)
       } catch (e) {
         this.listAllRates.isListError = true
         this.listAllRates.errorMessageList = e
@@ -199,6 +247,24 @@ export default {
   text-align: center;
 }
 
+.pageWrapper {
+  margin-top: 0.2rem;
+  display: flex;
+  gap: 0.7rem;
+}
+
+.page {
+  padding: 0.1rem 0.4rem;
+  border: 0.02rem solid rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.current-page {
+  border: 0.05rem solid rgba(23, 86, 8, 1);
+  font-weight: bold;
+  color: #00015e;
+}
+
 .converter {
   flex: 4;
   padding-top: 2.6rem;
@@ -215,5 +281,24 @@ export default {
 .select {
   display: flex;
   justify-content: space-between;
+}
+
+.rate-list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.rate-list-enter-active,
+.rate-list-leave-active {
+  transition: all 1s ease;
+}
+
+.rate-list-enter-from,
+.rate-list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.list-move {
+  transition: transform 1s ease;
 }
 </style>
