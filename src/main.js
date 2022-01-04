@@ -4,7 +4,7 @@ import components from './components'
 import gsap from "gsap"
 import Draggable from "gsap/Draggable"
 import router from './router'
-import './assets/styles.scss'
+import './styles.scss'
 import autofocus from 'vue-autofocus-directive';
 
 

@@ -7,7 +7,7 @@
       <img :src="image" alt="" width="25"/>
     </label>
     <input v-show="post.isChecked"
-           v-bind:value="values[post.id].title"
+           v-model="values[post.id].title"
            @blur="editTitle($event, post.id)"
            @keyup.enter="editTitle($event, post.id)"
            type="text"
@@ -25,7 +25,7 @@
         {{ item.message }}
       </label>
       <input v-show="item.isChecked"
-             v-bind:value="values[post.id].editMessage"
+             v-model="values[post.id].editMessage"
              @blur="editMessage($event, post.id, item.id)"
              @keyup.enter="editMessage($event, post.id, item.id)"
              type="text"
@@ -40,7 +40,7 @@
     </div>
   </div>
   <form class="form" @submit.prevent>
-    <input v-bind:value="values[post.id].message"
+    <input v-model="values[post.id].message"
            @input="inputMessage($event, post.id)"
            type="text"
            placeholder="add message">

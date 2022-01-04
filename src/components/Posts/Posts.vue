@@ -5,16 +5,18 @@
              @input="newPostTitle = $event.target.value"
              type="text"
              placeholder="New post"
+             ref="inputRef"
       />
       <button v-on:click="addPost"> add </button>
     </form>
-    <div class="posts" v-for="post in posts" :key="post.id">
+    <div class="posts" v-for="post in posts">
       <Post v-bind:post="post"
             v-bind:values="values"
             v-bind:image="image"
             v-bind:del="del"
             v-bind:edit="edit"
             v-bind:activeModal="activeModal"
+            :key="post.id"
       />
     </div>
     <Modal v-bind:isShow="isShowModal"
@@ -30,7 +32,7 @@ import image from "./png-clipart.svg"
 import del from "./del.svg"
 import edit from "./edit.svg"
 import Post from "./Post";
-import Modal from "../../views/ModalAddPost";
+import Modal from "../../views/ModalQuestion";
 
 export default {
   name: "Posts",
@@ -86,7 +88,11 @@ export default {
     }
   },
   methods: {
+    getRef() {
+      this.$refs.inputRef.focus()
+    },
     addPost() {
+      this.getRef()
       let lastPost = this.posts[this.posts.length - 1]
       if (this.newPostTitle.trim() !== '') {
         if (lastPost === undefined) {

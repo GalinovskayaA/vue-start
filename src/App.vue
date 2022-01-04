@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './assets/styles.scss';
+@import 'styles';
 
 #app {
   -webkit-font-smoothing: antialiased;
@@ -118,6 +118,7 @@ body {
 
 .black {
   background: linear-gradient(to right, rgba(51, 158, 94, 0.9) 20%, rgba(0, 30, 50, 0.9) 80%);
+  color: #d7ffcd;
 }
 
 .white {
