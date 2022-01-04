@@ -248,7 +248,7 @@ export default {
 }
 
 .pageWrapper {
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
   display: flex;
   gap: 0.7rem;
 }
