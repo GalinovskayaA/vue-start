@@ -1,11 +1,12 @@
+import './styles.scss'
 import { createApp } from 'vue'
 import App from './App.vue'
 import components from './components'
+import directives from "./commons/myDirectives/"
+import router from './router'
+import store from './store'
 import gsap from "gsap"
 import Draggable from "gsap/Draggable"
-import router from './router'
-import './styles.scss'
-import autofocus from 'vue-autofocus-directive';
 
 
 console.log(components)
@@ -15,8 +16,12 @@ const app = createApp(App);
 components.forEach(component => {
     app.component(component.name, component)
 })
+directives.forEach(directive => {
+    app.directive(directive.name, directive);
+})
 
-app.use(router).mount('#app')
-app.directive('autofocus', autofocus);
+app.use(router)
+   .use(store)
+   .mount('#app')
 
 gsap.registerPlugin(Draggable);

@@ -5,7 +5,7 @@
          :class="{modalContentActive: isShow}"
          v-on:click.stop.prevent
     >
-      <div> Are You Sure ? </div>
+      <div> {{ title }} </div>
       <div> ʕʘ‿ಠʔ </div>
       <div class="buttons">
         <button v-on:click="deletePost(postId)"> yes </button>
@@ -16,16 +16,15 @@
 </template>
 
 <script>
+import toggleMixin from "../mixins/toggleMixin";
+
 export default {
-  name: "Modal",
-  props: ['isShow', 'postId', 'deletePost', 'cancelDelete'],
-  mounted() {
-  },
-  data() {
-    return {
-    }
-  },
-  methods: {
+  name: "ModalQuestion",
+  mixins: [toggleMixin],
+  props: {
+    postId: Number,
+    deletePost: Function,
+    cancelDelete: Function
   },
 }
 </script>
@@ -64,6 +63,7 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  color: #0c2c48;
 }
 
 .modalContentActive {

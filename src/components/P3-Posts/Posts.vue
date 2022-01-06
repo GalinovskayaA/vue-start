@@ -19,10 +19,11 @@
             :key="post.id"
       />
     </div>
-    <Modal v-bind:isShow="isShowModal"
-           v-bind:postId="postIdForDelete"
-           v-bind:deletePost="deletePost"
-           v-bind:cancelDelete="cancelDelete"
+    <ModalQuestion v-bind:isShow="isShowModal"
+                   title="Are You Sure ?"
+                   v-bind:postId="postIdForDelete"
+                   v-bind:deletePost="deletePost"
+                   v-bind:cancelDelete="cancelDelete"
     />
   </div>
 </template>
@@ -32,13 +33,13 @@ import image from "./png-clipart.svg"
 import del from "./del.svg"
 import edit from "./edit.svg"
 import Post from "./Post";
-import Modal from "../../views/ModalQuestion";
+import ModalQuestion from "../../commons/modals/ModalQuestion";
 
 export default {
   name: "Posts",
   components: {
     Post,
-    Modal
+    ModalQuestion
   },
   mounted() {
   },

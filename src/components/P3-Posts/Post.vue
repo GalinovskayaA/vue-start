@@ -12,6 +12,7 @@
            @keyup.enter="editTitle($event, post.id)"
            type="text"
            placeholder="edit title"
+           v-super-focus
     />
     <span class="delete"
           v-on:click="activeModal(post.id)"
@@ -30,6 +31,7 @@
              @keyup.enter="editMessage($event, post.id, item.id)"
              type="text"
              placeholder="edit message"
+             v-super-focus
       />
       <span v-on:click="showMessage(item.id)">
           <img :src="edit" alt="edit" width="15"/>

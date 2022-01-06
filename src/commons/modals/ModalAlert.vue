@@ -15,9 +15,14 @@
 </template>
 
 <script>
+import toggleMixin from "../mixins/toggleMixin";
+
 export default {
   name: "ModalAlert",
-  props: ['isShow', 'closeModal', 'title'],
+  mixins: [toggleMixin],
+  props: {
+    closeModal: Function,
+  },
 }
 </script>
 

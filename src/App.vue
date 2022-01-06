@@ -7,7 +7,8 @@
           <router-link to="/calculator"> Calculator </router-link> |
           <router-link to="/converter"> Converter </router-link> |
           <router-link to="/posts"> Posts page </router-link> |
-          <router-link to="/counter"> Counter </router-link>
+          <router-link to="/counter"> Counter </router-link> |
+          <router-link to="/vuex"> VUEX </router-link>
         </div>
         <transition name="fade" mode="out-in">
           <button v-if="toggle"
@@ -30,7 +31,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
   components: {

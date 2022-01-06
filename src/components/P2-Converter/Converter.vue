@@ -24,7 +24,7 @@
                     title="Не реализовано"
         />
       </div>
-      <transition-group name="list" tag="div" >
+      <transition-group name="list" tag="div">
       <div v-if="listAllRates.isListError" class="error"> ¯\_(ツ)_/¯ {{ listAllRates.errorMessageList }} </div>
         <div v-else v-for="rate in sortedAndSearchRate" :key="rate.Cur_Code">
           <div class="list">
@@ -64,12 +64,12 @@
 
 <script>
 import axios from "axios";
-import Krutilka from "../../views/Krutilka";
-import MyInputRate from "../../views/MyInputRate";
-import MySelect from "../../views/MySelect";
-import MySelectRate from "../../views/MySelectRate";
-import MyInput from "../../views/MyInput";
-import ModalAlert from "../../views/ModalAlert";
+import Krutilka from "../../commons/Krutilka";
+import MyInputRate from "../../commons/myComponents/MyInputRate";
+import MySelect from "../../commons/myComponents/MySelect";
+import MySelectRate from "../../commons/myComponents/MySelectRate";
+import MyInput from "../../commons/myComponents/MyInput";
+import ModalAlert from "../../commons/modals/ModalAlert";
 
 export default {
   name: "Converter",
@@ -125,11 +125,6 @@ export default {
     this.fetchRateOfBel()
   },
   watch: {
-    /*selectedSort(newValue) {
-      this.listAllRates.allRates.sort((prev, curr) => {
-        return prev[newValue]?.localeCompare(curr[newValue])
-      })
-    },*/
     selectedRate(newValue) {
       this.initRateListAbbr.push(newValue)
       this.createNewRate(this.listRateOfBel.allRates, newValue)

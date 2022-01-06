@@ -1,7 +1,7 @@
-import MyInput from "../views/MyInput";
-import MyInputRate from "../views/MyInputRate";
-import MySelect from "../views/MySelect";
-import MySelectRate from "../views/MySelectRate";
+import MyInput from "../commons/myComponents/MyInput";
+import MyInputRate from "../commons/myComponents/MyInputRate";
+import MySelect from "../commons/myComponents/MySelect";
+import MySelectRate from "../commons/myComponents/MySelectRate";
 
 export default [
     MyInput,
