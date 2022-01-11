@@ -1,7 +1,7 @@
 <template>
   <div class="title" :class="{editing: post.isChecked}">
     <label v-show="!post.isChecked"
-           v-on:dblclick="showTitle"
+           v-on:dblclick="showTitle(post.id)"
     >
       {{ post.title }}
       <img :src="image" alt="" width="25"/>
@@ -33,7 +33,7 @@
              placeholder="edit message"
              v-super-focus
       />
-      <span v-on:click="showMessage(item.id)">
+      <span v-on:click="showMessage(post.id, item.id)">
           <img :src="edit" alt="edit" width="15"/>
       </span>
       <span v-on:click="deleteMessage(item.id)">
@@ -80,10 +80,12 @@ export default {
       }
       this.clear(postId)
     },
-    showMessage(messId) {
+    showMessage(postId, messId) {
+      this.values[postId].editMessage = this.post.body[messId].message
       this.post.body[messId].isChecked = true
     },
-    showTitle() {
+    showTitle(postId) {
+      this.values[postId].title = this.post.title
       this.post.isChecked = true
     },
     editTitle(e, postId) {
@@ -92,7 +94,6 @@ export default {
         this.post.title = this.values[postId].title
       }
       this.post.isChecked = false
-      this.clear(postId)
     },
     editMessage(e, postId, messId) {
       this.values[postId].editMessage = e.target.value
@@ -100,7 +101,6 @@ export default {
         this.post.body[messId].message = this.values[postId].editMessage
       }
       this.post.body[messId].isChecked = false
-      this.clear(postId)
     },
     deleteMessage(messId) {
       this.post.body = this.post.body.filter(message => message.id !== messId)

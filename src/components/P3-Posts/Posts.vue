@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import image from "./png-clipart.svg"
-import del from "./del.svg"
-import edit from "./edit.svg"
-import Post from "./Post";
-import ModalQuestion from "../../commons/modals/ModalQuestion";
+import image from "@/assets/Posts/png-clipart.svg"
+import del from "@/assets/Posts/del.svg"
+import edit from "@/assets/Posts/edit.svg"
+import Post from "@/components/P3-Posts/Post";
+import ModalQuestion from "@/commons/modals/ModalQuestion";
 
 export default {
   name: "Posts",
