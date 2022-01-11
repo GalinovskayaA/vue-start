@@ -4,7 +4,7 @@ import Converter from '../components/P2-Converter/Converter'
 import Home from "../commons/Home"
 import Posts from "../components/P3-Posts/Posts"
 import Counter from "../components/P4-Counter/Counter"
-import Vuex from "../components/P5-Vuex/Vuex"
+import Weather from "../components/P5-Vuex/Weather"
 
 const routes = [
     {path: '/vue-start', component: Home},
@@ -13,7 +13,7 @@ const routes = [
     {path: '/converter', name: 'My-Converter', component: Converter},
     {path: '/posts', name: 'My-Posts', component: Posts},
     {path: '/counter', name: 'My-Counter', component: Counter},
-    {path: '/vuex', name: 'My-Vuex', component: Vuex},
+    {path: '/Weather', name: 'My-Weather', component: Weather},
 ];
 
 const router = createRouter({

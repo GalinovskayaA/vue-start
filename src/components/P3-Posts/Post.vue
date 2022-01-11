@@ -46,7 +46,7 @@
            @input="inputMessage($event, post.id)"
            type="text"
            placeholder="add message">
-    <button v-on:click="addMessage(post.id)"> add </button>
+    <button v-on:click="addMessage(post.id)" class="post-buttons"> add </button>
   </form>
 </template>
 
@@ -128,12 +128,6 @@ input {
 }
 
 img {
-  cursor: pointer;
-}
-
-button {
-  width: 3rem;
-  border-radius: 0.2rem;
   cursor: pointer;
 }
 

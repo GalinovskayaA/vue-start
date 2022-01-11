@@ -63,12 +63,9 @@ export default {
   gap: 1rem;
 }
 
-button {
+.buttons button {
   width: 10rem;
   height: 2rem;
-  background-color: rgba(0, 0, 0, 0);
   border: none;
-  border-radius: 1rem;
-  box-shadow: 1px 1px 5px 3px rgba(34, 60, 80, 0.5);
 }
 </style>
