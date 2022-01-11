@@ -7,5 +7,6 @@ export const weatherModule = {
   mutations: {
   },
   actions: {
+
   },
 }

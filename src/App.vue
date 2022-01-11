@@ -3,12 +3,12 @@
     <div id="snow">
       <div id="nav" class="nav">
         <div class="nav-routes">
-          <router-link to="/"> Home </router-link> |
-          <router-link to="/calculator"> Calculator </router-link> |
-          <router-link to="/converter"> Converter </router-link> |
-          <router-link to="/posts"> Posts page </router-link> |
-          <router-link to="/counter"> Counter </router-link> |
-          <router-link to="/vuex"> VUEX </router-link>
+          <div @click="$router.push('/')"> Home </div> |
+          <div @click="$router.push('/counter')"> Counter </div> |
+          <div @click="$router.push('/calculator')"> Calculator </div> |
+          <div @click="$router.push('/posts')"> Posts page </div> |
+          <div @click="$router.push('/converter')"> Converter </div> |
+          <div @click="$router.push('/Weather')"> Weather </div>
         </div>
         <transition name="fade" mode="out-in">
           <button v-if="toggle"
@@ -98,7 +98,9 @@ body {
   flex: 3;
   display: flex;
   justify-content: start;
-  gap: 1rem;
+  gap: 0.8rem;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .button-control {

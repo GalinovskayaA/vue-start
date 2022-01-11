@@ -1,18 +1,19 @@
 <template>
-  <select v-model="modelValue" @change="changeOption" class="select">
-    <option disabled value=""> {{ title }} </option>
+  <select v-model="modelValue" @change="changeOption">
+    <option disabled value="" class="title"> {{ title }} </option>
     <option v-for="option in options"
-            :key="option.value"
-            :value="option.value"
+            :key="option"
+            :value="option"
+            class="option"
     >
-      {{ option.name }}
+       {{ option }}
     </option>
   </select>
 </template>
 
 <script>
 export default {
-  name: "MySelect",
+  name: "MySelectCity",
   props: {
     modelValue: String,
     title: String,
@@ -30,11 +31,17 @@ export default {
 </script>
 
 <style scoped>
-.select {
-  margin-top: 0.1rem;
-  padding: 0.3rem 0.5rem;
-  width: 16.5rem;
+select {
+  width: 50%;
+  margin: 1rem 0;
   outline: none;
-  border: 0.1rem solid #fdfbf4;
+}
+
+.option {
+  font-size: 0.8rem;
+}
+
+.title {
+  font-size: 1.2rem;
 }
 </style>

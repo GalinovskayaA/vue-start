@@ -7,7 +7,7 @@
       <h1> Complete list of foreign currencies: </h1>
       <MyInput v-model="searchQuery" placeholder="Поиск"/>
       <div class="select">
-        <MySelect v-model="selectedSort"
+        <MySelectSort v-model="selectedSort"
                   title="Complete list of foreign currencies: "
                   :options="sortOptions"/>
       </div>
@@ -66,7 +66,7 @@
 import axios from "axios";
 import Krutilka from "../../commons/Krutilka";
 import MyInputRate from "../../commons/myComponents/MyInputRate";
-import MySelect from "../../commons/myComponents/MySelect";
+import MySelectSort from "../../commons/myComponents/MySelectSort";
 import MySelectRate from "../../commons/myComponents/MySelectRate";
 import MyInput from "../../commons/myComponents/MyInput";
 import ModalAlert from "../../commons/modals/ModalAlert";
@@ -75,7 +75,7 @@ export default {
   name: "Converter",
   components: {
     MyInput,
-    MySelect,
+    MySelectSort,
     MySelectRate,
     MyInputRate,
     Krutilka,

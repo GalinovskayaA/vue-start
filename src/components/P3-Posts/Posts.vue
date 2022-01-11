@@ -7,7 +7,7 @@
              placeholder="New post"
              ref="inputRef"
       />
-      <button v-on:click="addPost"> add </button>
+      <button v-on:click="addPost" class="post-buttons"> add </button>
     </form>
     <div class="posts" v-for="post in posts">
       <Post v-bind:post="post"
@@ -144,21 +144,7 @@ export default {
     createNewPost(event) {
       this.newPostTitle = event.target.value
     }
-
   },
-  /*directives: {
-    focus: {
-      mounted: function (el) {
-        el.focus()
-      },
-      beforeUpdate: function (el) {
-        el.focus()
-      },
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  }*/
 }
 </script>
 
@@ -169,14 +155,8 @@ export default {
   box-sizing: border-box;
 }
 
-button {
-  width: 3rem;
-  cursor: pointer;
-  border-radius: 0.2rem;
-}
-
-input {
-  padding: 0 0.5rem;
+.content input {
+  padding: 0.1rem 0.5rem;
   background-color: #f1f1f1;
   outline: none;
   border: none;
