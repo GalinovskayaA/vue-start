@@ -52,7 +52,8 @@
                          :abbreviation="rate.abbreviation"
                          :key="rate.id"
                          :onChangeValue="onChangeValue"
-                         :onRemoveRate="onRemoveRate"/>
+                         :onRemoveRate="onRemoveRate"
+            />
           </div>
         </transition-group>
         <MySelectRate v-model="selectedRate"

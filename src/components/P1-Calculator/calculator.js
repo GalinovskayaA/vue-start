@@ -13,7 +13,6 @@ export default {
         document.addEventListener('keydown',
 event => {
             if ((event.key).match(/[0-9.]/)) {
-                console.log(event)
                 this.appendNumber(event.key)
             } else if ((event.key).match(/[+/*=-]/)) {
                 this.chooseOperation(event.key)
@@ -59,8 +58,12 @@ event => {
             this.currentOperand = this.currentOperand.toString().replace(" ", "").slice(0, -1)
         },
         squarRoot: function () {
-            if (this.currentOperand === '') return
+            if (this.currentOperand === '') this.currentOperand = 0
             if (parseFloat(this.currentOperand) < 0) this.currentOperand = Infinity
+            if (this.previousOperand !== '') {
+                if (this.currentOperand === '') this.currentOperand = 0
+                this.compute()
+            }
             this.currentOperand = Math.sqrt(parseFloat(this.currentOperand))
         },
         negativeNumber: function () {

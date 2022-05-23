@@ -15,7 +15,8 @@
           <span> / </span>
           <span> {{ currentWeatherCity.region }} </span>
         </div>
-        <MySelectCity v-model="selectedCity"
+        <MySelectCity :model-value="selectedCity"
+                      @update:model-value="setSelectedCity"
                       title="Выбрать другой город "
                       :options="listCity"
         />
@@ -34,7 +35,7 @@
             <div> Осадков, мм: {{ currentWeatherCity.precip_mm }} </div>
             <div> Давление: {{ currentWeatherCity.pressure_mb }} </div>
             <div> Ультрафиолетовый индекс: {{ currentWeatherCity.uv }} </div>
-            <div> Скорость ветра, м/с: {{ currentWeatherCity.wind_kph }} </div>
+            <div> Скорость ветра, м/с: {{ currentWeatherCity.wind_mps }} </div>
             <div> Направление ветра: {{ windDir(currentWeatherCity.wind_dir) }} </div>
           </div>
         </div>
@@ -65,7 +66,7 @@
           <div> Температура воздуха: {{ forecast.day.avgtemp_c }} </div>
           <div> Максимальная скорость ветра, м/с: {{ (forecast.day.maxwind_kph / 3.6).toFixed(1) }} </div>
           <div> Общее количество осадков, мм: {{ forecast.day.totalprecip_mm }} </div>
-          <h1 @click="this.isShowHourWeather = !isShowHourWeather"
+          <h1 @click="this.setShowHourWeather(!isShowHourWeather)"
               class="cursor"
           >
             По часам {{ !isShowHourWeather ? '(подробнее)' : '(свернуть)' }}
@@ -91,6 +92,8 @@
 import axios from "axios";
 import Krutilka from "../../commons/Krutilka";
 import MySelectCity from "../../commons/myComponents/MySelectCity";
+import {mapState, mapGetters, mapMutations, mapActions} from "vuex";
+
 export default {
   name: "Weather",
   components: {
@@ -99,7 +102,7 @@ export default {
   },
   data() {
     return {
-      isWait: false,
+      /*isWait: false,
       isShowHourWeather: false,
       isError: false,
       errorMessage: '',
@@ -129,91 +132,74 @@ export default {
         uv: 0,
         wind_mps: 0, // сила ветра
         wind_dir: '',
-      },
+      },*/
     }
   },
   mounted() {
     this.fetchCurrentWeather()
     this.fetchForecast()
+  //  console.log('dsfsd ' + this.days)
   },
   watch: {
     selectedCity(newValue) {
-      this.selectedCity = newValue
+      this.setSelectedCity(newValue)
       this.fetchCurrentWeather()
       this.fetchForecast()
     },
   },
   computed: {
+    ...mapState({
+      isWait: state => state.weather.isWait,
+      isShowHourWeather: state => state.weather.isShowHourWeather,
+      isError: state => state.weather.isError,
+      errorMessage: state => state.weather.errorMessage,
+      selectedCity: state => state.weather.selectedCity,
+      listCity: state => state.weather.listCity,
+      alerts: state => state.weather.alerts,
+      days: state => state.weather.days,
+      totalDays: state => state.weather.totalDays,
+      forecastDays: state => state.weather.forecastDays,
+      currentWeatherCity: state => state.weather.currentWeatherCity
+    }),
+    ...mapGetters({
+      alertsFilter: 'weather/alertsFilter'
+    }),
+    /*alertsFilter() {
+      let array = []
+      console.log(this.alerts)
+      this.alerts.forEach(item => {
+        array.push(item.desc)
+      })
+      console.log(array)
+      this.setAlerts([...new Set(array)])
+      this.alerts.forEach( item => {
+        console.log(item)
+      })
+    },*/
   },
   methods: {
-    async fetchCurrentWeather() {
-      this.isWait = true
-      try {
-        const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
-          params: {
-            key: '5761c9c6f44e4889a0f91838220601',
-            q: this.selectedCity,
-            aqi: 'no',
-            lang: 'ru'
-          }
-        })
-        this.currentWeatherCity.country = response.data.location.country
-        this.currentWeatherCity.region = response.data.location.region
-        this.currentWeatherCity.tz_id = response.data.location.tz_id
-        this.currentWeatherCity.text = response.data.current.condition.text
-        this.currentWeatherCity.icon = response.data.current.condition.icon
-        this.currentWeatherCity.feelslike_c = response.data.current.feelslike_c
-        this.currentWeatherCity.feelslike_f = response.data.current.feelslike_f
-        this.currentWeatherCity.gust_kph = response.data.current.gust_kph
-        this.currentWeatherCity.humidity = response.data.current.humidity
-        this.currentWeatherCity.last_updated = response.data.current.last_updated
-        this.currentWeatherCity.precip_mm = response.data.current.precip_mm
-        this.currentWeatherCity.pressure_mb = response.data.current.pressure_mb
-        this.currentWeatherCity.temp_c = response.data.current.temp_c
-        this.currentWeatherCity.temp_f = response.data.current.temp_f
-        this.currentWeatherCity.uv = response.data.current.uv
-        this.currentWeatherCity.wind_kph = (response.data.current.wind_kph / 3.6).toFixed(1)
-        this.currentWeatherCity.wind_dir = response.data.current.wind_dir
-      } catch (e) {
-        this.isError = true
-        this.errorMessage = e
-      } finally {
-        this.isWait = false
-      }
-    },
-    async fetchForecast() {
-      this.isWait = true
-      try {
-        const response = await axios.get('https://api.weatherapi.com/v1/forecast.json', {
-          params: {
-            key: '5761c9c6f44e4889a0f91838220601',
-            q: this.selectedCity,
-            days: this.days,
-            aqi: 'no',
-            lang: 'ru',
-            alerts: 'yes'
-          }
-        })
-        this.alertsFilter(response.data.alerts.alert)
-        this.forecastDays = response.data.forecast.forecastday
-      } catch (e) {
-        this.isError = true
-        this.errorMessage = e
-      } finally {
-        this.isWait = false
-      }
-    },
+    ...mapMutations({
+      setDays: 'weather/setDays',
+      setShowHourWeather: 'weather/setShowHourWeather',
+      setSelectedCity: 'weather/setSelectedCity',
+      setAlerts: 'weather/setAlerts'
+    }),
+    ...mapActions({
+      fetchCurrentWeather: 'weather/fetchCurrentWeather',
+      fetchForecast: 'weather/fetchForecast'
+    }),
     onChangeDays(daysNumber) {
-      this.days = daysNumber
+      this.setDays(daysNumber)
+      this.fetchCurrentWeather()
       this.fetchForecast()
     },
-    alertsFilter(alerts) {
+    /*alertsFilter(alerts) {
       let array = []
       alerts.forEach(item => {
           array.push(item.desc)
         })
       this.alerts = [...new Set(array)]
-    },
+    },*/
     moonPhase(newValue) {
       let value = {
         'New Moon': 'Новолуние',
