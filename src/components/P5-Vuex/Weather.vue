@@ -89,7 +89,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Krutilka from "../../commons/Krutilka";
 import MySelectCity from "../../commons/myComponents/MySelectCity";
 import {mapState, mapGetters, mapMutations, mapActions} from "vuex";
@@ -102,43 +101,11 @@ export default {
   },
   data() {
     return {
-      /*isWait: false,
-      isShowHourWeather: false,
-      isError: false,
-      errorMessage: '',
-      selectedCity: 'Минск',
-      listCity: ['Минск', 'Брест', 'Gomel', 'Гродно', 'Mogilev (Belarus)', 'Vitebsk (Belarus)','Москва', 'Saint Petersburg',
-        'Омск', 'Калининград', 'Шарм Эль Шейх', 'Хургада', 'Прага', 'Варшава', 'Вильнюс', 'Рига', 'Киев', 'Таллин', 'Париж',
-        'Рим', 'Мадрид', 'Нью Йорк', 'Лондон', 'София', 'Пекин', 'Токио'],
-      alerts: [],
-      days: 2,
-      totalDays: 3,
-      forecastDays: [],
-      currentWeatherCity: {
-        country: '',
-        region: '',
-        tz_id: '',
-        text: '',
-        icon: '',
-        feelslike_c: 0,
-        feelslike_f: 0,
-        gust_kph: 0, // порыв ветра
-        humidity: 0, // влажность
-        last_updated: '',
-        precip_mm: 0,
-        pressure_mb: 0, // давление
-        temp_c: 0,
-        temp_f: 0,
-        uv: 0,
-        wind_mps: 0, // сила ветра
-        wind_dir: '',
-      },*/
     }
   },
   mounted() {
     this.fetchCurrentWeather()
     this.fetchForecast()
-  //  console.log('dsfsd ' + this.days)
   },
   watch: {
     selectedCity(newValue) {
@@ -162,20 +129,7 @@ export default {
       currentWeatherCity: state => state.weather.currentWeatherCity
     }),
     ...mapGetters({
-      alertsFilter: 'weather/alertsFilter'
     }),
-    /*alertsFilter() {
-      let array = []
-      console.log(this.alerts)
-      this.alerts.forEach(item => {
-        array.push(item.desc)
-      })
-      console.log(array)
-      this.setAlerts([...new Set(array)])
-      this.alerts.forEach( item => {
-        console.log(item)
-      })
-    },*/
   },
   methods: {
     ...mapMutations({
@@ -193,13 +147,6 @@ export default {
       this.fetchCurrentWeather()
       this.fetchForecast()
     },
-    /*alertsFilter(alerts) {
-      let array = []
-      alerts.forEach(item => {
-          array.push(item.desc)
-        })
-      this.alerts = [...new Set(array)]
-    },*/
     moonPhase(newValue) {
       let value = {
         'New Moon': 'Новолуние',

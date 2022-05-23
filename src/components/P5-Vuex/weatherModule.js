@@ -35,21 +35,6 @@ export const weatherModule = {
     },
   }),
   getters: {
-/*    selectedCity(state, newValue) {
-      state.selectedCity = newValue
-    //  action('fetchCurrentWeather')
-    //  action('fetchForecast')
-    //  this.fetchCurrentWeather()
-    //  this.fetchForecast()
-    },*/
-    alertsFilter(state) {
-      let array = []
-      state.alerts.forEach(item => {
-        array.push(item.desc)
-      })
-      state.alerts = [...new Set(array)]
-      console.log(state.alerts)
-    },
   },
   mutations: {
     setWait(state, boolean) {
@@ -67,9 +52,6 @@ export const weatherModule = {
     setSelectedCity(state, city) {
       state.selectedCity = city
     },
-    setAlerts(state, alerts) {
-      state.alerts = alerts
-    },
     setDays(state, days) {
       state.days = days
     },
@@ -79,12 +61,6 @@ export const weatherModule = {
     setForecastDays(state, forecastDays) {
       state.forecastDays = forecastDays
     },
-    /*setCurrentWeatherCityLocation(state, location) {
-      state.currentWeatherCity.location = location
-    },
-    setCurrentWeatherCityCurrent(state, current) {
-      state.currentWeatherCity.current = current
-    },*/
     setCurrentWeatherCityWinter(state, winter) {
       state.currentWeatherCity.wind_mps = winter // сила ветра
     },
@@ -107,11 +83,17 @@ export const weatherModule = {
       state.currentWeatherCity.wind_mps = (city.current.wind_kph / 3.6).toFixed(1) // сила ветра
       state.currentWeatherCity.wind_dir = city.current.wind_dir
     },
+    setAlertsFilter(state, alerts) {
+      let array = []
+      alerts.forEach(item => {
+        array.push(item.desc)
+      })
+      state.alerts = [...new Set(array)]
+    },
   },
   actions: {
     async fetchCurrentWeather({state, commit}) {
       commit('setWait', true)
- /*     this.isWait = true*/
       try {
         const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
           params: {
@@ -121,23 +103,17 @@ export const weatherModule = {
             lang: 'ru'
           }
         })
-      //  console.log(response.data)
         commit('setCurrentWeatherCity', response.data)
-     //   commit('setCurrentWeatherCityCurrent', response.data.current)
         commit('setCurrentWeatherCityWinter', (response.data.current.wind_kph / 3.6).toFixed(1))
       } catch (e) {
         commit('setError', true)
-        /*this.isError = true*/
         commit('setErrorMessage', e)
-        /*this.errorMessage = e*/
       } finally {
         commit('setWait', false)
-        /*this.isWait = false*/
       }
     },
     async fetchForecast({state, commit}) {
       commit('setWait', true)
-      /*this.isWait = true*/
       try {
         const response = await axios.get('https://api.weatherapi.com/v1/forecast.json', {
           params: {
@@ -149,19 +125,13 @@ export const weatherModule = {
             alerts: 'yes'
           }
         })
-        console.log(response.data.alerts)
-        commit('setAlerts', response.data.alerts.alert)
-        // this.alertsFilter(response.data.alerts.alert)
+        commit('setAlertsFilter', response.data.alerts.alert)
         commit('setForecastDays', response.data.forecast.forecastday)
-        // state.forecastDays = response.data.forecast.forecastday
       } catch (e) {
         commit('setError', true)
-        /*this.isError = true*/
         commit('setErrorMessage', e)
-        /*this.errorMessage = e*/
       } finally {
         commit('setWait', false)
-        /*this.isWait = false*/
       }
     },
   },
