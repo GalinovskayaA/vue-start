@@ -1,7 +1,7 @@
 import './styles.scss'
 import { createApp } from 'vue'
 import App from './App.vue'
-import components from './components'
+import components from './commons'
 import directives from "./commons/myDirectives/"
 import router from './router'
 import store from './store'
