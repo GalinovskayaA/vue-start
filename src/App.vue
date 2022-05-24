@@ -8,7 +8,7 @@
           <div @click="$router.push('/calculator')"> Calculator </div> |
           <div @click="$router.push('/posts')"> Posts page </div> |
           <div @click="$router.push('/converter')"> Converter </div> |
-          <div @click="$router.push('/Weather')"> Weather </div>
+          <div @click="$router.push('/weather')"> Weather </div>
         </div>
         <transition name="fade" mode="out-in">
           <button v-if="toggle"
@@ -25,7 +25,7 @@
           </button>
         </transition>
       </div>
-      <router-view/>
+      <router-view mod="hash"/>
     </div>
   </div>
 </template>
