@@ -1,20 +1,16 @@
 <template>
-  <div class="center content">
-    <img alt="Vue logo" src="./../assets/logo.png">
+  <div class="g-center content">
+    <Life />
   </div>
 </template>
 
 <script>
+import Life from "./Life"
+
 export default {
   name: "Home",
   components: {
+    Life
   },
-  data() {
-    return {
-    }
-  }
 }
 </script>
-
-<style scoped>
-</style>

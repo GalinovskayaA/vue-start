@@ -1,22 +1,46 @@
 <template>
-  <div>
-    <div @click="$router.push('/')"> Home </div>
-    <div>
-      <button @click="$router.push('/calculator')"> calculator </button>
-      <button @click="$router.push('/converter')"> converter </button>
-      <button @click="$router.push('/posts')"> posts </button>
-      <button @click="$router.push('/counter')"> counter </button>
-      <button @click="$router.push('/weather')"> weather </button>
-    </div>
+  <div class="navbar-container">
+    <RouterLink v-for="route in ROUTES" :to="route.to"> {{ route.link }} </RouterLink>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Navbar"
-}
+<script setup>
+import { ROUTES } from '@/data/routes'
+
 </script>
 
 <style scoped>
+.navbar-container {
+  position: absolute;
+  top: 0;
 
+  width: 100%;
+  height: $navbar-height;
+  padding: 1rem 2rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & a {
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    padding-bottom: 1px;
+    background-image: linear-gradient(to right, currentColor 33%, transparent 33% 66%, currentColor 66%);
+    background-position: right bottom;
+    background-size: 350% 1px;
+    background-repeat: no-repeat;
+
+    transition: background-position 1s;
+
+    &:hover {
+      background-position: left bottom;
+    }
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+}
 </style>

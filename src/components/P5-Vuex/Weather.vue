@@ -1,5 +1,5 @@
 <template>
-  <div class="center content">
+  <div class="g-center content">
     <div v-for="alert in alerts" :key="alert">
       <div v-if="alert !== ''" class="dangers">
         {{ alert }}

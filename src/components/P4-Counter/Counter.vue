@@ -1,5 +1,5 @@
 <template>
-  <div class="center counter">
+  <div class="g-center counter">
     <div class="buttons">
       <button v-on:click="onChangeFirst()"> First Counter </button>
       <button v-on:click="onChangeSecond()"> Second Counter </button>

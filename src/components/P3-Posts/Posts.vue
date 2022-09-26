@@ -1,5 +1,5 @@
 <template>
-  <div class="center content">
+  <div class="g-center content">
     <form class="form" @submit.prevent>
       <input v-bind:value="newPostTitle"
              @input="newPostTitle = $event.target.value"
@@ -7,7 +7,7 @@
              placeholder="New post"
              ref="inputRef"
       />
-      <button v-on:click="addPost" class="post-buttons"> add </button>
+      <button v-on:click="addPost" class="g-post-buttons"> add </button>
     </form>
     <div class="posts" v-for="post in posts">
       <Post v-bind:post="post"

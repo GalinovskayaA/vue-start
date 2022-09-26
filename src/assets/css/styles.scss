@@ -1,0 +1,61 @@
+@import '@/assets/css/variables';
+@import '@/assets/css/global';
+
+* {
+  box-sizing: border-box;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2.3vw;
+  font-weight: normal;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 14px;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input, textarea {
+  outline: none;
+  border-radius: 0;
+  -webkit-appearance: none !important;
+
+  &:-webkit-autofill {
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: 0 0 0 30px white inset !important;
+    }
+  }
+}
+
+a, button, input, textarea {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  outline: none;
+}
+
+ul, li {
+  padding: 0;
+  list-style: none;
+}
+
+img:not([src]) {
+  visibility: hidden;
+}
+
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #0c2c48;
+}

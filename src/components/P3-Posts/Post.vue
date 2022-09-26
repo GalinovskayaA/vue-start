@@ -46,7 +46,7 @@
            @input="inputMessage($event, post.id)"
            type="text"
            placeholder="add message">
-    <button v-on:click="addMessage(post.id)" class="post-buttons"> add </button>
+    <button v-on:click="addMessage(post.id)" class="g-post-buttons"> add </button>
   </form>
 </template>
 

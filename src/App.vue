@@ -1,43 +1,56 @@
 <template>
-  <div :class="{black: toggle, white: !toggle}" class="snowContainer">
-    <div id="snow">
-      <div id="nav" class="nav">
-        <div class="nav-routes">
-          <div @click="$router.push('/')"> Home </div> |
-          <div @click="$router.push('/counter')"> Counter </div> |
-          <div @click="$router.push('/calculator')"> Calculator </div> |
-          <div @click="$router.push('/posts')"> Posts page </div> |
-          <div @click="$router.push('/converter')"> Converter </div> |
-          <div @click="$router.push('/weather')"> Weather </div>
-        </div>
+  <div class="app-container" :class="{ black: toggle, white: !toggle }">
+    <div :class="{ snow: snowing }">
+      <div class="header">
+        <Navbar />
         <transition name="fade" mode="out-in">
-          <button v-if="toggle"
-                  v-on:click="toggle = !toggle"
-                  class="button-control"
-                  :class="{buttonControlWhite: toggle}"
-                  key="white"
-          > white
-          </button>
-          <button v-else v-on:click="toggle = !toggle"
-                  class="button-control"
-                  key="black"
-          > black
+          <button
+            class="button-control"
+            :class="{ white: toggle }"
+            @click="changeToggle"
+          >
+            {{ toggle ? 'light' : 'dark' }}
           </button>
         </transition>
       </div>
-      <router-view mod="hash"/>
+      <router-view mod="hash" />
     </div>
   </div>
 </template>
 
 <script>
+import Navbar from "@/components/Navbar/Navbar"
+import moment from "moment"
+
 export default {
   name: 'App',
   components: {
+    Navbar
+  },
+  created: function () {
+    this.moment = moment;
   },
   data() {
     return {
       toggle: false,
+
+    }
+  },
+  computed: {
+    snowing() {
+      const currentYear = moment().year()
+      const lastYear = currentYear + 1
+
+      const startDay = moment().year(currentYear).month(10).date(1)
+      const endDay = moment().year(lastYear).month(1).endOf("month")
+      const currentMoment = moment()
+
+      return currentMoment > startDay && currentMoment < endDay
+    }
+  },
+  methods: {
+    changeToggle() {
+      this.toggle = !this.toggle
     }
   },
   provide() {
@@ -51,71 +64,29 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'styles';
+@import '@/assets/css/styles';
 
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #0c2c48;
-}
-
-* {
-  box-sizing: border-box;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 2.3vw;
-  font-weight: normal;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
-}
-
-.nav {
-  position: absolute;
-  top: 0;
+.header {
   display: flex;
   align-items: center;
-  width: 100%;
-  padding: 1rem 2rem;
-}
-
-.nav a {
-  text-decoration: none;
-  color: rgba(0, 30, 50, 0.9);
-}
-
-.nav a:hover {
-  color: rgba(217, 255, 235, 1);
-  text-shadow: 1px 1px 2px #055224, 0 0 0.5rem white;
-}
-
-.nav-routes {
-  flex: 3;
-  display: flex;
-  justify-content: start;
-  gap: 0.8rem;
-  font-size: 0.8rem;
-  cursor: pointer;
+  justify-content: flex-end;
 }
 
 .button-control {
-  float: right;
+  position: relative;
+  margin: 1rem 2rem 0 0;
   width: 3.5rem;
-  background-color: rgba(255, 255, 255, 0);
+  background: linear-gradient(to right, rgba(51, 158, 94, 0.9) 20%, rgba(0, 30, 50, 0.9) 80%);
+  color: #d7ffcd;
   box-shadow: 1px 1px 5px 3px rgba(34, 60, 80, 0.5);
   border: none;
   border-radius: 1rem;
   cursor: pointer;
-}
 
-.buttonControlWhite {
-  color: #d7ffcd;
-  box-shadow: 1px 1px 5px 3px rgba(214, 253, 204, 0.5);
+  &.white {
+    color: #0c2c48;
+    box-shadow: 1px 1px 5px 3px rgba(214, 253, 204, 0.5);
+  }
 }
 
 .black {
@@ -137,29 +108,33 @@ body {
   opacity: 0;
 }
 
-.snowContainer { width: 100%; height: max-content; position: absolute; top: 0; left: 0; z-index: 0;}
-#snow {
+.app-container {
+  width: 100%;
+  height: max-content;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.snow {
   width: 100%;
   height: 100%;
   background-image:
       url("https://yraaa.ru/_pu/27/15825154.png"),
       url("https://yraaa.ru/_pu/27/89961317.png"),
       url("https://yraaa.ru/_pu/27/21791255.png");
-  -webkit-animation: snow 20s linear infinite;
-  -moz-animation: snow 20s linear infinite;
-  -ms-animation: snow 20s linear infinite;
+
   animation: snow 20s linear infinite;
 }
+
 @keyframes snow {
-  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
-}
-@-moz-keyframes snow {
-  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
-}
-@-webkit-keyframes snow {
-  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
-}
-@-ms-keyframes snow {
-  0% {background-position: 0 0, 0 0, 0 0;} 100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 500px 1000px, 400px 400px, 300px 300px;
+  }
 }
 </style>
