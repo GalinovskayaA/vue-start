@@ -1,52 +1,33 @@
 <template>
   <div class="organizer__selector">
     <img
-        class="organizer__arrow_left"
-        @click="changeCount(-1)"
-        src="@/assets/arrow.svg"
-        alt="prev"
+      src="@/assets/arrow.svg"
+      alt="prev"
+      class="organizer__arrow_left"
+      @click="$emit('onChange', -1)"
     >
     <span class="organizer__month">
       {{ currentMonth }}
     </span>
     <img
-        class="organizer__arrow_right"
-        @click="changeCount(1)"
-        src="@/assets/arrow.svg"
-        alt="next"
+      src="@/assets/arrow.svg"
+      alt="next"
+      class="organizer__arrow_right"
+      @click="$emit('onChange', 1)"
     >
   </div>
 </template>
 
 <script>
-import { ref, computed, toRefs } from 'vue'
-
 export default {
   name: "Selector",
-  props: [ 'moment', 'count', 'changeCount' ],
+  props: [ 'moment', 'count' ],
+  emits: [ 'onChange' ],
   computed: {
     currentMonth() {
       return this.moment().add(this.count, 'month').format('MMMM YYYY')
     }
   },
-  methods: {
-  },
-  setup() {
-
-  //  let currentMonth = this.moment(1, 'month').format('MMMM YYYY')
-
-    const setCurrentMonth = computed(() => {
-      return this.moment(1, 'month').format('MMMM YYYY')
-    })
-
-    const go = () => {
-
-    }
-
-    return {
-
-    }
-  }
 }
 </script>
 

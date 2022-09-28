@@ -25,7 +25,7 @@
         />
       </div>
       <transition-group name="list" tag="div">
-      <div v-if="listAllRates.isListError" class="error"> ¯\_(ツ)_/¯ {{ listAllRates.errorMessageList }} </div>
+        <div v-if="listAllRates.isListError" class="error"> ¯\_(ツ)_/¯ {{ listAllRates.errorMessageList }} </div>
         <div v-else v-for="rate in sortedAndSearchRate" :key="rate.Cur_Code">
           <div class="list">
             <span> {{ rate.Cur_Name }} : </span>

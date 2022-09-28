@@ -14,12 +14,12 @@
       </thead>
 
       <tbody>
-      <tr v-for="(week, index) in getCalendar">
+      <tr v-for="(week, index) in calendar">
         <td
-            v-for="(day, ind) in week.daysInWeek"
-            @click="changeDay(day, index, ind)"
-            :key="index + ind"
-            :class="{disabled: day.disabled, selected: day.selected, active: day.active}"
+          v-for="(day, ind) in week.daysInWeek"
+          :key="index + ind"
+          :class="{ disabled: day.disabled, selected: day.selected, active: day.active }"
+          @click="$emit('onChangeDay', day, index, ind)"
         >
           <span>
             {{ moment(day.value).format("ddd DD MMM YY") }}
@@ -34,62 +34,8 @@
 <script>
 export default {
   name: "Calendar",
-  props: [ 'moment', 'count' ],
-  data() {
-    return {
-      calendar: []
-    }
-  },
-  mounted() {
-  },
-  computed: {
-    getCalendar() {
-      const currentMoment = this.moment().add(this.count, 'month')
-
-      const startDay = currentMoment.clone().startOf('month').startOf('week')
-      const endDay = currentMoment.clone().endOf('month').endOf('week')
-
-      const date = startDay.clone().subtract(1, 'day')
-
-      const calendar = []
-
-      while (date.isBefore(endDay, 'day')) {
-        calendar.push({
-          daysInWeek: Array(7)
-              .fill(0)
-              .map(() => {
-                const value = date.add(1, 'day').clone()
-                const active = this.moment().isSame(value, 'date')
-                const disabled = !currentMoment.isSame(value, 'month')
-                const selected = currentMoment.isSame(value, 'date')
-                return { value, active, disabled, selected }
-              })
-        })
-      }
-
-      return this.calendar = calendar
-    }
-  },
-  methods: {
-    changeDay(date, index, ind) {
-      if (date.disabled) return
-
-      this.moment().add(this.count, 'month').set({
-        date: date.value.date(),
-        month: date.value.month(),
-        year: date.value.year()
-      })
-
-//      console.log(this.calendar[index].daysInWeek[ind])
-
-      this.calendar.forEach(week => week.daysInWeek.forEach(day => day.selected = false))
-      this.calendar[index].daysInWeek[ind].selected = true
-      console.log(date)
-    },
-
-  },
-  setup() {
-  }
+  props: [ 'moment', 'calendar', 'count' ],
+  emits: [ 'onChangeDay' ],
 }
 </script>
 

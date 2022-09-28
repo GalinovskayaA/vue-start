@@ -3,16 +3,18 @@
     <div class="organizer__time"> {{ moment(todayDate).format("dddd MMMM DD, YYYY [at] HH:mm:ss") }} </div>
     <div class="organizer__content">
       <div class="organizer__header">
-        <selector :moment="moment" :count=count :changeCount="changeCount"> </selector>
+        <selector :moment="moment" :count=count @onChange="changeCount" />
       </div>
 
-      <main>
-        <calendar :moment="moment" :count="count"> </calendar>
-      </main>
+      <calendar :moment="moment" :calendar="calendar" :count="count" @onChangeDay="changeDay" />
 
-      <div>
-        <plan> </plan>
-      </div>
+      <Plan
+        :plan="selectedDay.plan"
+        @onAddEvent="addEventInPlan"
+        @onDeleteEvent="deleteEvent"
+        @onImplemented="implementPlan"
+        @onChangeEvent="changeEvent"
+      />
     </div>
   </div>
 </template>
@@ -32,16 +34,89 @@ export default {
   },
   data() {
     return {
-      count: 0
+      calendar: [],
+      count: 0,
+      plan: [],
+      selectedDay: {}
     }
   },
   mounted() {
+    this.getCalendar()
     this.getCurrentDate()
   },
   methods: {
+    getCalendar() {
+      const currentMoment = this.moment().add(this.count, 'month')
+
+      const startDay = currentMoment.clone().startOf('month').startOf('week')
+      const endDay = currentMoment.clone().endOf('month').endOf('week')
+
+      const date = startDay.clone().subtract(1, 'day')
+
+      const calendar = []
+
+      while (date.isBefore(endDay, 'day')) {
+        calendar.push({
+          daysInWeek: Array(7)
+            .fill(0)
+            .map(() => {
+              const value = date.add(1, 'day').clone()
+              const active = this.moment().isSame(value, 'date')
+              const disabled = !currentMoment.isSame(value, 'month')
+              const selected = currentMoment.isSame(value, 'date')
+              const plan = []
+              return { value, active, disabled, selected, plan }
+            })
+        })
+      }
+      return this.calendar = calendar
+    },
+    changeDay(date, index, ind) {
+      if (date.disabled) return
+
+      this.moment().add(this.count, 'month').set({
+        date: date.value.date(),
+        month: date.value.month(),
+        year: date.value.year()
+      })
+
+      this.calendar.forEach(week => week.daysInWeek.forEach(day => day.selected = false))
+      this.calendar[index].daysInWeek[ind].selected = true
+      this.selectedDay = this.calendar[index].daysInWeek[ind]
+    },
     changeCount(value) {
       this.count = this.count + value
-    }
+      this.getCalendar()
+    },
+    addEventInPlan(plan) {
+      this.calendar.forEach(w => w.daysInWeek.forEach(d => {
+        if (d.value === this.selectedDay.value) d.plan.push(plan)
+      }))
+    },
+    implementPlan(index) {
+      this.calendar.map(w => w.daysInWeek.map(d => {
+        if (d.value === this.selectedDay.value) d.plan.map(p => {
+          if (p.id === index) return p.checked = !p.checked
+          else return p
+        })
+        else return d
+      }))
+    },
+    changeEvent(index, title, hour, min) {
+      this.calendar.map(w => w.daysInWeek.map(d => {
+        if (d.value === this.selectedDay.value) d.plan = d.plan.map(p => {
+          if (p.id === index) return { ...p, title: title, hour: hour, min: min }
+          else return p
+        })
+        else return d
+      }))
+    },
+    deleteEvent(index) {
+      this.calendar.map(w => w.daysInWeek.map(d => {
+        if (d.value === this.selectedDay.value) d.plan = d.plan.filter(p => p.id !== index)
+        else return d
+      }))
+    },
   },
   setup() {
     let todayDate = ref(new Date())
@@ -64,7 +139,6 @@ export default {
   padding: 50px 30px;
 
   &__time {
-    margin-top: 7%;
     text-align: right;
     font-size: 1.2rem;
     font-weight: 500;
