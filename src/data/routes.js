@@ -31,4 +31,8 @@ export const ROUTES = [
     link: 'photo',
     to: '/photo',
   },
+  {
+    link: 'threeJS',
+    to: '/three',
+  },
 ]

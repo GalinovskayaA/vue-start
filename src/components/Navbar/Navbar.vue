@@ -23,7 +23,7 @@ import { ROUTES } from '@/data/routes'
   gap: 1rem;
 
   & a {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     cursor: pointer;
 
     padding-bottom: 1px;
