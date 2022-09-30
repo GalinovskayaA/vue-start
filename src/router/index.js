@@ -7,6 +7,7 @@ import Weather from "../components/P5-Vuex/Weather"
 import Organizer from "../components/P6-Organizer/Organizer"
 import Products from "../components/P7-Products/Products";
 import Photo from "../components/P8-Photo/Photo";
+import ThreeJS from "../components/P9-ThreeJS/ThreeJS";
 
 const routes = [
     {path: '/vue-start', component: Home},
@@ -18,6 +19,7 @@ const routes = [
     {path: '/organizer', name: 'My-Organizer', component: Organizer},
     {path: '/products', name: 'My-Products', component: Products},
     {path: '/photo', name: 'My-Photo', component: Photo},
+    {path: '/three', name: 'My-ThreeJS', component: ThreeJS},
 ];
 
 const router = createRouter({

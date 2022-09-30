@@ -74,10 +74,12 @@ export default {
 
 .button-control {
   position: relative;
-  margin: 1rem 2rem 0 0;
-  width: 3.5rem;
+  margin: 0.7rem 2rem 0 0;
+  padding: 0.1rem;
+  width: 3rem;
   background: linear-gradient(to right, rgba(51, 158, 94, 0.9) 20%, rgba(0, 30, 50, 0.9) 80%);
   color: #d7ffcd;
+  font-size: 0.9rem;
   box-shadow: 1px 1px 5px 3px rgba(34, 60, 80, 0.5);
   border: none;
   border-radius: 1rem;
